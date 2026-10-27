@@ -86,6 +86,12 @@ function drawPuzzle() {
 		if (e.key == "Backspace" || e.key == "Delete") {
 			$(e.target).removeClass("wrong correct");
 		}
+		let dirs = {"ArrowLeft":[-1,0], "ArrowRight":[1,0], "ArrowUp":[0,-1], "ArrowDown":[0,1]};
+		let dir = dirs[e.key];
+		if (dir) {
+			e.preventDefault();
+			moveFocus(e.target, dir[0], dir[1]);
+		}
 	});
 	$('[data-bs-toggle="tooltip"]').tooltip(); // Bootstrapin tooltippien alustus
 }
@@ -139,6 +145,44 @@ function checkAnswers() {
 		}
 	}
 }
+var moving = false;
+function moveFocus(from, dx, dy) {
+	if (moving || !from || !from.id) {
+		return;
+	}
+	moving = true;
+	try {
+		let arr = from.id.split("_");
+		let x = Number(arr[1]) + dx;
+		let y = Number(arr[2]) + dy;
+		let limit = 100;
+		while (limit-- > 0 && x >= 0 && y >= 0 && x <= puzzle.maxX && y <= puzzle.maxY) {
+			let next = document.getElementById("td_" + x + "_" + y);
+			if (next && !next.disabled) {
+				// Päivitetään korostus ja vihje ilman fokuksen siirtoa
+				let found = [];
+				for (let i = 0; i < puzzle.words.length; i++) {
+					if (contains(puzzle.words[i], x, y)) {
+						found.push(i + 1);
+					}
+				}
+				if (found.length == 1 && String(found[0]) != String(selectedInfo)) {
+					let info = $("td.info").toArray().find(el => $(el).html() == found[0]);
+					if (info) {
+						showTip($(info).attr("data"), true);
+					}
+				}
+				selectedInput = next;
+				next.focus();
+				return;
+			}
+			x += dx;
+			y += dy;
+		}
+	} finally {
+		moving = false;
+	}
+}
 function handleInput(event) {
 	let el = event.target;
 	let value = String(el.value || "");
@@ -181,14 +225,16 @@ function changeValueAndMoveToNext(event) {
 		checkWinCondition();
 	}
 }
-function showTip(dataStr) {
+function showTip(dataStr, skipFocus) {
 	let data = JSON.parse(dataStr);
 	$("td.info").removeClass("selected");
 	$("input.letter").removeClass("active");
 	$("#cell_" + data.x + "_" + data.y).addClass("selected");
 	let input = $("#td_" + data.targetX + "_" + data.targetY);
-	selectedInput = input; 
-	input.trigger("focus");
+	if (!skipFocus) {
+		selectedInput = input;
+		input.trigger("focus");
+	}
 
 	word = puzzle.words[(data.letter-1)];
 	for (let i = 0; i <= word.word.length; i++) {
@@ -238,7 +284,7 @@ function setGameBoardStatus(enabled) {
 		$("td.info").toArray().forEach((elem)=>{
 			let el = $(elem);
 			 el.on("click", ()=>{
-				showTip(el.attr("data"));
+				showTip(el.attr("data"), false);
 			 });
 		});
 	}
