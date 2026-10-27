@@ -118,10 +118,8 @@ function activateCurrentWord(event) {
 		$("td.info").toArray().forEach(elem=>{
 			var el = $(elem);
 			if (el.html() == index) {
-				let selectedCopy = selectedInput;
-				el.trigger("click");
-				selectedInput = selectedCopy;
-				$(selectedInput).trigger("focus");
+				// Päivitetään vihje ja korostus siirtämättä fokusta
+				showTip(el.attr("data"), true);
 			}
 		});
 	}
