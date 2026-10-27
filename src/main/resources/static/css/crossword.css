@@ -3,17 +3,31 @@ body {
 	background-image: url("../img/balloons_bg.png");
 	background-repeat: no-repeat;
 	background-position: left;
-	overflow: hidden;
+	overflow-x: hidden;
+}
+table {
+	margin: 0 auto;
+	border-collapse: collapse;
 }
 td {
 	width: 25px;
 	height: 25px;
 	text-align: center;
+	padding: 0;
 }
 input {
 	width: 25px;
 	height: 25px;
+	padding: 0;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 16px; /* estää iOS:n automaattisen zoomauksen */
 	background-color: #ddd;
+	touch-action: manipulation;
+}
+button {
+	margin-bottom: 6px;
+	touch-action: manipulation;
 }
 .info {
 	font-weight: bold;
@@ -61,4 +75,21 @@ td.selected {
 input:focus {
 	background-color: yellow;
 }
-
+@media (max-width: 768px) {
+	td, input {
+		width: 6vw;
+		height: 6vw;
+		min-width: 20px;
+		min-height: 20px;
+	}
+	input {
+		font-size: 16px;
+	}
+	.current-button, .new-button {
+		padding: 8px 10px;
+		min-height: 40px;
+	}
+	.new-button {
+		margin-left: 0 !important;
+	}
+}

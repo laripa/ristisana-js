@@ -35,7 +35,7 @@ function drawPuzzle() {
 						if (w.x == targetX && w.y == targetY) {
 							letter = ""+(j+1);
 							let data = {"letter":letter,"tip":w.tip,"x":x,"y":y,"targetX":targetX,"targetY":targetY};
-							jsContent =  " data='" + JSON.stringify(data) + "'";
+							jsContent =  " data=\"" + JSON.stringify(data).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;") + "\"";
 							tdClass = 'info'
 							break;
 						}
@@ -44,7 +44,7 @@ function drawPuzzle() {
 			}
 			
 			if (tdClass == 'letter') {
-				tdContent = "<input class='letter' id='td_" + x + "_" + y +"' type='text' data='" + letter + "' maxlength='1' onkeydown='changeValueAndMoveToNext(event)'/>";
+				tdContent = "<input class='letter' id='td_" + x + "_" + y +"' type='text' data='" + letter + "' autocomplete='off' autocorrect='off' autocapitalize='characters' spellcheck='false' inputmode='text' enterkeyhint='next'/>";
 			} else if (tdClass == 'info') {
 				tdContent = letter;
 				jsContent+= 'data-bs-toggle="tooltip" data-bs-placement="right" title="Paina numerosta nähdäksesi vihjeen."';
@@ -79,6 +79,14 @@ function drawPuzzle() {
 		}
 	});
 	$("input.letter").on("click", activateCurrentWord);
+	// Mobiilinäppäimistöt eivät anna luotettavaa keydown-event.key-arvoa, joten käytetään input-tapahtumaa
+	$("input.letter").on("input", handleInput);
+	$("input.letter").on("focus", (e)=>{ let t = e.target; setTimeout(()=>{ try { t.select(); } catch (err) {} }, 0); });
+	$("input.letter").on("keydown", (e)=>{
+		if (e.key == "Backspace" || e.key == "Delete") {
+			$(e.target).removeClass("wrong correct");
+		}
+	});
 	$('[data-bs-toggle="tooltip"]').tooltip(); // Bootstrapin tooltippien alustus
 }
 
@@ -129,6 +137,19 @@ function checkAnswers() {
 		if (el.val() && String(el.val()).length == 1) {
 			el.addClass(el.val() == el.attr("data") ? "correct" : "wrong");
 		}
+	}
+}
+function handleInput(event) {
+	let el = event.target;
+	let value = String(el.value || "");
+	if (value.length == 0) {
+		return;
+	}
+	let letter = Array.from(value).pop();
+	if (/^[a-zA-ZåäöÅÄÖ]$/.test(letter)) {
+		changeValueAndMoveToNext({"key": letter, "target": el});
+	} else {
+		el.value = "";
 	}
 }
 function changeValueAndMoveToNext(event) {
