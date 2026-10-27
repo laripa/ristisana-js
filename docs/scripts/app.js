@@ -212,15 +212,42 @@ function changeValueAndMoveToNext(event) {
 			let x = arr[1];
 			let y = arr[2];
 
-			if (w.d == 'H' && x < w.x + w.word.length) {
+			if (w.d == 'H' && Number(x) < w.x + w.word.length - 1) {
 				selectedInput = $("#td_" + (Number(x)+1) + "_" + y);
 				selectedInput.trigger("focus");
-			} else if (w.d == 'V' && y < w.y + w.word.length) {
+			} else if (w.d == 'V' && Number(y) < w.y + w.word.length - 1) {
 				selectedInput = $("#td_" + x + "_" + (Number(y)+1));
 				selectedInput.trigger("focus");
+			} else {
+				focusNextUncompletedWord(Number(selectedInfo) - 1);
 			}
 		}
 		checkWinCondition();
+	}
+}
+function isWordComplete(word) {
+	for (let i = 0; i < word.word.length; i++) {
+		let cx = word.d == 'H' ? word.x + i : word.x;
+		let cy = word.d == 'V' ? word.y + i : word.y;
+		let el = $("#td_" + cx + "_" + cy);
+		if (String(el.val()).toUpperCase() != String(el.attr("data")).toUpperCase()) {
+			return false;
+		}
+	}
+	return true;
+}
+function focusNextUncompletedWord(currentIndex) {
+	let n = puzzle.words.length;
+	for (let k = 1; k <= n; k++) {
+		let idx = (currentIndex + k) % n;
+		if (!isWordComplete(puzzle.words[idx])) {
+			let num = String(idx + 1);
+			let info = $("td.info").toArray().find(el => $(el).html() == num);
+			if (info) {
+				showTip($(info).attr("data"), false);
+			}
+			return;
+		}
 	}
 }
 function showTip(dataStr, skipFocus) {
