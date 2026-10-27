@@ -1,0 +1,64 @@
+body {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	background-image: url("../img/balloons_bg.png");
+	background-repeat: no-repeat;
+	background-position: left;
+	overflow: hidden;
+}
+td {
+	width: 25px;
+	height: 25px;
+	text-align: center;
+}
+input {
+	width: 25px;
+	height: 25px;
+	background-color: #ddd;
+}
+.info {
+	font-weight: bold;
+	color: green;
+}
+.active {
+	background-color: yellow;
+}
+.info:hover {
+	cursor: pointer;
+}
+.current-button {
+	background-color: green;
+	color: white;
+}
+.current-button:hover {
+	background-color: white;
+	color: green;
+}
+.new-button {
+	background-color: blue;
+	color: white;
+}
+.new-button:hover {
+	background-color: white;
+	color: blue;
+}
+#tip {
+	background-color: #fcfc28;
+	color: black;
+}
+.correct {
+	background-color: #cfb;
+}
+.wrong {
+	background-color: #fbb;
+}
+.wrong {
+	color: red;
+}
+td.selected {
+	background-color: green;
+	color: white;
+}
+input:focus {
+	background-color: yellow;
+}
+

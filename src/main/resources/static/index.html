@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+			 integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+			 crossorigin="anonymous">
+		<link rel="stylesheet" href="css/crossword.css"/>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	</head>
+	<body>
+		<div class="container mt-3">
+			<div class="row" style="text-align: center">
+				<div class="col-12 h1 mb-2 p-2 shadow rounded-1" style="font-weight: bold;">Ristisanapeli <span style="color: red;">L</span><span style="color: orange;">A</span><span style="color: yellow; text-shadow: black;">P</span><span style="color: green;">S</span><span style="color: aqua;">I</span><span style="color:blue;">L</span><span style="color: purple;">L</span><span style="color: black;">E</span></div>
+			</div>
+			<div class="row mt-1" style="text-align: center">
+				<div class="col-12">
+					<button id="clueBtn" class="current-button rounded-3">Näytä oikea kirjain</button>
+					<button id="checkBtn" class="current-button rounded-3">Tarkista</button>
+					<button id="clearBtn" class="current-button rounded-3">Tyhjennä</button>
+					
+					<button class="new-button rounded-3 dropdown-toggle" style="margin-left: 20px;" type="button" id="categoryButton" data-bs-toggle="dropdown" aria-expanded="false">Eläimet</button>
+					<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="categoryButton">
+						<li><a id="elaimet" class="dropdown-item active" href="#">Eläimet</a></li>
+						<li><a id="vastakohdat" class="dropdown-item" href="#">Vastakohdat</a></li>
+					</ul>
+					<button id="newGameBtn" class="new-button rounded-3">Uusi peli</button>
+			</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col"></div>
+				<div class="col-md-auto justify-content-center">
+					<table>
+						<tbody id="cw-tbody">
+					</table>
+				</div>
+				<div class="col"></div>
+			</div>
+		</div>
+		<div class="row justify-content-center" style="height: 100px;">
+			<div class="col-3"></div>
+			<div id="tip" class="col-6 justify-content-center align-items-center p-2 mt-3 border border-2 border-dark shadow">&nbsp;</div>
+			<div class="col-3"></div>
+		</div>
+		<script src="scripts/words.js"></script>
+		<script src="scripts/crossword.js"></script>
+		<script src="scripts/app.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"></script>
+		<noscript>You need JavaScript support to play this game</noscript>
+	</body>
+</html>

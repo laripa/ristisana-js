@@ -1,0 +1,51 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+.flattened-pom.xml
+.m2/
+
+# Personal IDE files
+src/test/resources/scrap.jpage
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.factorypath
+
+# Build
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/
+
+# Environment
+.env
+.env.local
+
+# Application logs
+logs/
+*.log
+*.log.*
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Google Cloud
+.gcp
+google-cloud-sdk/
